@@ -1,0 +1,8 @@
+fastf1
+pyspark==3.5.5
+minio
+psycopg[binary]
+apache-airflow-providers-postgres
+apache-airflow-providers-apache-spark
+apache-airflow-providers-amazon
+apache-airflow-providers-slack
