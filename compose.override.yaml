@@ -17,6 +17,7 @@ services:
     build:
       dockerfile: ./images/spark/Dockerfile
     container_name: spark-master
+    mem_limit: 1g
     ports:
       - "38080:8080"
     environment:
@@ -28,7 +29,8 @@ services:
   spark-worker:
     build:
       dockerfile: ./images/spark/Dockerfile
-    scale: 3
+    scale: 2
+    mem_limit: 1g
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
