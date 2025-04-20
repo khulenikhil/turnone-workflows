@@ -17,7 +17,7 @@ RUN mkdir -p ${AIRFLOW_HOME}/jars && \
     curl -L -o ${AIRFLOW_HOME}/jars/aws-java-sdk.jar https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.12.698/aws-java-sdk-bundle-1.12.698.jar && \
     curl -L -o ${AIRFLOW_HOME}/jars/hadoop-aws.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.6/hadoop-aws-3.3.6.jar
 
-ENV SPARK_JARS_DIR=${AIRFLOW_HOME}/jars
+ENV SPARK_JARS="/opt/airflow/jars/postgresql-jdbc.jar,/opt/airflow/jars/aws-java-sdk.jar,/opt/airflow/jars/hadoop-aws.jar"
 
 COPY ./requirements.txt requirements.txt
 
