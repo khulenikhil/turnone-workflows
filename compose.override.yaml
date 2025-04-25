@@ -13,9 +13,9 @@ services:
     volumes:
       - ~/.docker-volumes/turn-one/workflows/warehouse:/var/lib/postgresql/data
     restart: always
+
   spark-master:
-    build:
-      dockerfile: ./images/spark/Dockerfile
+    image: khulenikhil/spark:3.5.5-python3.12
     container_name: spark-master
     mem_limit: 1g
     ports:
@@ -23,17 +23,20 @@ services:
     environment:
       - SPARK_MODE=master
       - SPARK_MASTER_HOST=spark-master
+    volumes:
+      - ./spark-defaults.conf:/opt/spark/conf/spark-defaults.conf
     command: >
       bash -c "/opt/spark/sbin/start-master.sh && tail -f /dev/null"
 
   spark-worker:
-    build:
-      dockerfile: ./images/spark/Dockerfile
+    image: khulenikhil/spark:3.5.5-python3.12
     scale: 2
     mem_limit: 1g
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
+    volumes:
+      - ./spark-defaults.conf:/opt/spark/conf/spark-defaults.conf
     command: >
       bash -c "/opt/spark/sbin/start-worker.sh spark://spark-master:7077 && tail -f /dev/null"
 
@@ -53,4 +56,3 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-
